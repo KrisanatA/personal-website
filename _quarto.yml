@@ -15,7 +15,7 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: Morph
     css: styles.css
     toc: true
 
