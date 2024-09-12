@@ -1,0 +1,9 @@
+---
+title: "Software"
+---
+
+## animbook
+
+“animbook” is a package to help the user visualize the changes in performance measures and demographic affiliations using animation. It is a package to help prepare, plot, and animate the data.
+
+It is available on [CRAN](https://cran.r-project.org/web/packages/animbook/index.html) and [GitHub](https://github.com/KrisanatA/animbook)

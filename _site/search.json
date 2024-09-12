@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "KrisanatA",
+    "section": "",
+    "text": "My name is Krisanat Anukarnsakulchularp, or you can call me Otto. I was born in Thailand but moved to New Zealand in 2013 to study aboard."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "My name is Krisanat Anukarnsakulchularp, or you can call me Otto. I was born in Thailand but moved to New Zealand in 2013 to study aboard."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "Education",
+    "text": "Education\nBachelor of Actuarial Science | Melbourne, Australia\nMonash University | 2018 - 2021\nMaster of Business Analytics | Melbourne, Australia\nMonash University | 2022 - Present"
+  },
+  {
+    "objectID": "software.html",
+    "href": "software.html",
+    "title": "Software",
+    "section": "",
+    "text": "“animbook” is a package to help the user visualize the changes in performance measures and demographic affiliations using animation. It is a package to help prepare, plot, and animate the data.\nIt is available on CRAN and GitHub"
+  },
+  {
+    "objectID": "software.html#software",
+    "href": "software.html#software",
+    "title": "Software",
+    "section": "",
+    "text": "“animbook” is a package to help the user visualize the changes in performance measures and demographic affiliations using animation. It is a package to help prepare, plot, and animate the data.\nIt is available on CRAN and GitHub"
+  },
+  {
+    "objectID": "software.html#animbook",
+    "href": "software.html#animbook",
+    "title": "Software",
+    "section": "",
+    "text": "“animbook” is a package to help the user visualize the changes in performance measures and demographic affiliations using animation. It is a package to help prepare, plot, and animate the data.\nIt is available on CRAN and GitHub"
+  }
+]

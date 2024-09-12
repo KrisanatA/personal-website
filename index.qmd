@@ -1,0 +1,16 @@
+---
+title: ""
+image: "images/profile.png"
+about:
+  template: solana
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/KrisanatA
+---
+
+
+Hello! My name is Krisanat Anukarnsakulchularp, or you can call me Otto. My sister drew my profile picture inspired by my favorite animal.
+
+I'm currently working as a Teaching associate at Monash University for the Econometrics and Business Statistics department. My interests are in data structure and visualization.
+
