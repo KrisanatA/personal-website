@@ -1,0 +1,20 @@
+---
+title: "My first ever CRAN package"
+description: 
+  My experience on developing the first R package.
+author: "Krisanat A."
+date: 2024-09-12
+image: "pictures/banner.png"
+categories: [R package, ggplot2, gganimate]
+format:
+  html:
+    toc: true
+    toc_float: true
+    fig-align: center
+    number-sections: false
+    theme: solar
+---
+
+## Journey
+
+I got this project while sleeping on the couch. Di sent me an email to work on the project
