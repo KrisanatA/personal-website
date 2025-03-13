@@ -12,9 +12,8 @@ format:
     toc_float: true
     fig-align: center
     number-sections: false
-    theme: solar
 ---
 
 ## Journey
 
-I got this project while sleeping on the couch. Di sent me an email to work on the project
+It was during the summer holiday when I was sleeping on the couch, I suddenly got an email from Di with the title "ETC5543 project over the summer" and I immediately replied "Yes". That is how I start working with Di.

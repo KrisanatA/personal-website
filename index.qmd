@@ -10,7 +10,7 @@ about:
 ---
 
 
-Hello! My name is Krisanat Anukarnsakulchularp, or you can call me Otto. My sister drew my profile picture inspired by my favorite animal.
+Hello! My name is Krisanat Anukarnsakulchularp, or you can call me Otto. My sister drew my profile picture inspired by my favourite animal.
 
-I'm currently working as a Teaching associate at Monash University for the Econometrics and Business Statistics department. My interests are in data structure and visualization.
+I'm currently a PhD student at Monash University in the Econometrics and Business Statistics department. My research interests are in network data structure and visualization.
 

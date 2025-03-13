@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "KrisanatA",
     "section": "",
-    "text": "Hello! My name is Krisanat Anukarnsakulchularp, or you can call me Otto. My sister drew my profile picture inspired by my favorite animal.\nI’m currently working as a Teaching associate at Monash University for the Econometrics and Business Statistics department. My interests are in data structure and visualization."
+    "text": "Hello! My name is Krisanat Anukarnsakulchularp, or you can call me Otto. My sister drew my profile picture inspired by my favourite animal.\nI’m currently a PhD at Monash University in the Econometrics and Business Statistics department. My research interests are in network data structure and visualization."
   },
   {
     "objectID": "software.html",
@@ -19,5 +19,26 @@
     "title": "Software",
     "section": "",
     "text": "“animbook” is a package to help the user visualize the changes in performance measures and demographic affiliations using animation. It is a package to help prepare, plot, and animate the data.\nIt is available on CRAN and GitHub"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "My first ever CRAN package\n\n\n\n\n\n\nR package\n\n\nggplot2\n\n\ngganimate\n\n\n\nMy experience on developing the first R package.\n\n\n\n\n\nSep 12, 2024\n\n\nKrisanat A.\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/my-first-package/animbook.html",
+    "href": "posts/my-first-package/animbook.html",
+    "title": "My first ever CRAN package",
+    "section": "",
+    "text": "It was during the summer holiday when I was sleeping on the couch, I suddenly got an email from Di with the title “ETC5543 project over the summer” and I immediately replied “Yes”. That is how I start working with Di."
+  },
+  {
+    "objectID": "posts/my-first-package/animbook.html#journey",
+    "href": "posts/my-first-package/animbook.html#journey",
+    "title": "My first ever CRAN package",
+    "section": "",
+    "text": "It was during the summer holiday when I was sleeping on the couch, I suddenly got an email from Di with the title “ETC5543 project over the summer” and I immediately replied “Yes”. That is how I start working with Di."
   }
 ]
