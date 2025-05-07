@@ -12,6 +12,8 @@ website:
         text: Software
       - href: cv.qmd
         text: CV
+      - href: hacky-hour.qmd
+        text: Hacky-Hour
 
 format:
   html:
