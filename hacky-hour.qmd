@@ -1,5 +1,0 @@
----
-title: "Hacky Hour"
----
-
-VGhlIGFuc3dlciB0byBhbGwgb2YgdGhpcyBpcyAiRHIuIEVsZXZlbiI=
