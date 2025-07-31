@@ -10,6 +10,8 @@ website:
         text: Home
       - href: software.qmd
         text: Software
+      - href: blog.qmd
+        text: Blog
       - href: cv.qmd
         text: CV
 
