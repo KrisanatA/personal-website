@@ -6,6 +6,10 @@ author:
 date: 07-31-2025
 categories: [Quarto, R, Network, Graph]
 draft: false
+knitr:
+  opts_chunk: 
+    dev: svg
+    dev.args: {bg: "transparent" }
 ---
 
 ```{r}

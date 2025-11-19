@@ -1,0 +1,165 @@
+---
+title: "EBS Department Network"
+format: html
+knitr:
+  opts_chunk: 
+    dev: svg
+    dev.args: {bg: "transparent" }
+    out-width: "100%"
+lightbox: true
+---
+
+## Department relationship
+
+```{r}
+#| echo: false
+#| message: false
+
+library(ggraph)
+library(tidygraph)
+library(ggplot2)
+library(fuzzyjoin)
+library(tidyverse)
+
+load(here::here("data/staff.rda"))
+load(here::here("data/student.rda"))
+
+student_clean <- students |> 
+  mutate(supervisor = str_remove(supervisor, "Prof |A/Prof |Dr |Prof. |Dr. |Assoc Prof. |Professor "),
+         supervisor = case_when(
+           supervisor == "David T. Frazier" ~ "David Frazier",
+           supervisor == "Di Cook" ~ "Dianne Cook",
+           supervisor == "Farshid Vahid" ~ "Farshid Vahid-Araghi",
+           supervisor == "Susan VanderPlas" ~ "Susan Vanderplus",
+           supervisor == "Thiyanga S. Talagala" ~ "Thiyanga Talagala",
+           supervisor == "Rob J Hyndman" ~ "Rob Hyndman",
+           supervisor == "Ruben Loaiza-Maya" ~ "Ruben Loaiza Maya",
+           .default = supervisor
+         ),
+         supervisor = ifelse(name == "Bets Ruscoe" & supervisor == "George Athanasopoulos", "Bonsoo Koo", supervisor)) |> 
+  add_row(name = "Vis Leong", interest = "Infectious disease modelling", supervisor = "Dianne Cook") |>
+  add_row(name = "Vis Leong", interest = "Infectious disease modelling", supervisor = "Michael Lydeamore") |>
+  add_row(name = "Bets Ruscoe", interest = "Mitigating unfairness amplification from deep learning models", supervisor = "Susan Wei") |> 
+  rename(to = name,
+         from = supervisor) |> 
+  filter(to != "Shakila Mallawathantrige")
+
+student_campus <- student_clean |> 
+  left_join(staff,
+            by = c("from" = "name")) |> 
+  group_by(to) |> 
+  slice(1) |> 
+  ungroup() |> 
+  select(to, campus)
+
+student_information <- student_clean |> 
+  select(-from) |>
+  distinct() |> 
+  mutate(position = "Student") |>
+  left_join(student_campus) |> 
+  rename(name = to)
+  
+edge <- student_clean |> 
+  select(from, to) |> 
+  add_row(from = "Jessica Leung", to = "Tina Rashid Jafari")
+
+full_information <- rbind(student_information, staff)
+
+node <- c(unique(edge$from), unique(edge$to)) |> 
+  as_tibble() |> 
+  rename(name = value) |> 
+  left_join(full_information)
+  
+graph <- tbl_graph(nodes = node, edges = edge, directed = FALSE) |> 
+  mutate(indicator = ifelse(position == "Student", "student", "supervisor"),
+         indicator = ifelse(is.na(indicator), "supervisor", indicator))
+```
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-format: png
+#| fig-dpi: 200
+
+ggraph(graph, layout = "stress") +
+  geom_edge_link() +
+  geom_node_point(aes(color = indicator)) +
+  geom_node_label(aes(label = name), size = 1.5, repel = TRUE, label.padding = 0.15) +
+  scale_color_manual(values = c("blue", "red"),
+                     labels = c("Student", "Supervisor")) +
+  labs(color = "") +
+  theme_void() +
+  theme(legend.position = "bottom")
+```
+
+## Staff relationship
+
+```{r}
+#| echo: false
+#| message: false
+#| fig-width: 8
+#| fig-format: png
+#| fig-dpi: 200
+
+sup_edge <- edge |> 
+  inner_join(edge, by = "to", relationship = "many-to-many") |>
+  select(-to) |> 
+  rename(from = from.x,
+         to = from.y) |> 
+  filter(from < to)
+
+sup_node <- c(unique(sup_edge$from), unique(sup_edge$to)) |> 
+  as_tibble() |> 
+  distinct() |> 
+  rename(name = value) |> 
+  left_join(staff)
+
+sup_graph <- tbl_graph(nodes = sup_node, edges = sup_edge)
+
+ggraph(sup_graph, layout = "stress") +
+  geom_edge_link() +
+  geom_node_point(aes(color = campus)) +
+  geom_node_label(aes(label = name), size = 1.5, repel = TRUE, label.padding = 0.15) +
+    scale_color_manual(values = c("blue", "red", "grey"),
+                       labels = c("Caulfield", "Clayton", "External")) +
+  labs(color = "") +
+  theme_void() +
+  theme(legend.position = "bottom")
+```
+
+
+## Student relationship
+
+```{r}
+#| echo: false
+#| message: false
+#| fig-width: 8
+#| fig-format: png
+#| fig-dpi: 200
+
+stu_edge <- edge |> 
+  inner_join(edge, by = "from", relationship = "many-to-many") |>
+  select(-from) |> 
+  rename(from = to.x,
+         to = to.y) |> 
+  filter(from < to)
+
+stu_node <- c(unique(stu_edge$from), unique(stu_edge$to)) |> 
+  as_tibble() |> 
+  distinct() |> 
+  rename(name = value) |> 
+  left_join(student_information)
+
+stu_graph <- tbl_graph(nodes = stu_node, edges = stu_edge)
+
+ggraph(stu_graph, layout = "stress") +
+  geom_edge_link() +
+  geom_node_point(aes(color = campus)) +
+  geom_node_label(aes(label = name), size = 1.5, repel = TRUE, label.padding = 0.15) +
+    scale_color_manual(values = c("blue", "red", "grey"),
+                       labels = c("Caulfield", "Clayton", "External")) +
+  labs(color = "") +
+  theme_void() +
+  theme(legend.position = "bottom")
+```
+

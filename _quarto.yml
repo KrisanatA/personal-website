@@ -10,6 +10,8 @@ website:
         text: Home
       - href: software.qmd
         text: Software
+      - href: ebs-network.qmd
+        text: EBS Network
       - href: blog.qmd
         text: Blog
       - href: cv.qmd
