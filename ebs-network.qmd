@@ -75,6 +75,10 @@ graph <- tbl_graph(nodes = node, edges = edge, directed = FALSE) |>
          indicator = ifelse(is.na(indicator), "supervisor", indicator))
 ```
 
+::: {.panel-tabset}
+
+## Department
+
 ```{r}
 #| echo: false
 #| fig-width: 8
@@ -92,7 +96,8 @@ ggraph(graph, layout = "stress") +
   theme(legend.position = "bottom")
 ```
 
-## Staff relationship
+
+## Staff
 
 ```{r}
 #| echo: false
@@ -118,9 +123,9 @@ sup_graph <- tbl_graph(nodes = sup_node, edges = sup_edge)
 
 ggraph(sup_graph, layout = "stress") +
   geom_edge_link() +
-  geom_node_point(aes(color = campus)) +
+  geom_node_point(aes(color = campus), size = 3) +
   geom_node_label(aes(label = name), size = 1.5, repel = TRUE, label.padding = 0.15) +
-    scale_color_manual(values = c("blue", "red", "grey"),
+    scale_color_manual(values = c("#f6768E", "#007D34", "#817066"),
                        labels = c("Caulfield", "Clayton", "External")) +
   labs(color = "") +
   theme_void() +
@@ -128,7 +133,7 @@ ggraph(sup_graph, layout = "stress") +
 ```
 
 
-## Student relationship
+## Student
 
 ```{r}
 #| echo: false
@@ -154,12 +159,13 @@ stu_graph <- tbl_graph(nodes = stu_node, edges = stu_edge)
 
 ggraph(stu_graph, layout = "stress") +
   geom_edge_link() +
-  geom_node_point(aes(color = campus)) +
+  geom_node_point(aes(color = campus), size = 3) +
   geom_node_label(aes(label = name), size = 1.5, repel = TRUE, label.padding = 0.15) +
-    scale_color_manual(values = c("blue", "red", "grey"),
+    scale_color_manual(values = c("#f6768E", "#007D34", "#817066"),
                        labels = c("Caulfield", "Clayton", "External")) +
   labs(color = "") +
   theme_void() +
   theme(legend.position = "bottom")
 ```
 
+:::

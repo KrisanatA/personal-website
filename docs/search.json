@@ -60,7 +60,7 @@
     "href": "ebs-network.html",
     "title": "EBS Department Network",
     "section": "",
-    "text": "Joining with `by = join_by(name)`"
+    "text": "DepartmentStaffStudent"
   },
   {
     "objectID": "ebs-network.html#staff-relationship",
@@ -75,5 +75,12 @@
     "title": "EBS Department Network",
     "section": "Student relationship",
     "text": "Student relationship"
+  },
+  {
+    "objectID": "ebs-network.html#department-relationship",
+    "href": "ebs-network.html#department-relationship",
+    "title": "EBS Department Network",
+    "section": "",
+    "text": "DepartmentStaffStudent"
   }
 ]
