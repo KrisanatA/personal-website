@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/slide-extension/index.html",
       "/posts/department-network/index.html"
     ]
   }
