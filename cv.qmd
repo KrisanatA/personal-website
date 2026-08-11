@@ -1,5 +1,8 @@
 ---
 title: ""
+toc: false
 ---
 
-<iframe src="cv/phd-cv.pdf" style="height: 680px; width: 960px;scrolling=no"></iframe> 
+::: {.cv-frame}
+<iframe src="cv/phd-cv.pdf"></iframe>
+::: 

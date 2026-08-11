@@ -61,7 +61,10 @@ scrape_phd_info <- function(url) {
         supervisors_text <- trimws(supervisors_text)
 
         # Split supervisors by comma, semicolon, or "and"
-        supervisors_list <- strsplit(supervisors_text, "\\s*[,;]\\s*|\\s+and\\s+")[[1]]
+        supervisors_list <- strsplit(
+          supervisors_text,
+          "\\s*[,;]\\s*|\\s+and\\s+"
+        )[[1]]
         supervisors_list <- trimws(supervisors_list)
 
         # Create one row per supervisor
@@ -86,7 +89,7 @@ scrape_phd_info <- function(url) {
             supervisor = NA,
             stringsAsFactors = FALSE
           )
-       )
+        )
       }
     }
   }
@@ -94,20 +97,23 @@ scrape_phd_info <- function(url) {
   return(phd_data)
 }
 
-url <- as.vector(glue::glue("https://www.monash.edu/business/research/our-researchers/graduate-research-students-and-supervisors?queries_degree_query=Econometrics+and+Business+Statistics&queries_degree_query_posted=1&result_1619149_result_page={a}", 
-                            a = c("1", "2", "3", "4")))
+url <- as.vector(glue::glue(
+  "https://www.monash.edu/business/research/our-researchers/graduate-research-students-and-supervisors?queries_degree_query=Econometrics+and+Business+Statistics&queries_degree_query_posted=1&result_1619149_result_page={a}",
+  a = c("1", "2", "3", "4")
+))
 
 for (i in seq_along(url)) {
-  download.file(url[i],
-                destfile = paste0("data/page", i, ".html"),
-                quiet = TRUE)
+  download.file(
+    url[i],
+    destfile = paste0("data/page", i, ".html"),
+    quiet = TRUE
+  )
 }
 
 file <- glue::glue("data/page{a}.html", a = c("1", "2", "3", "4"))
 
 results <- do.call(rbind, lapply(file, scrape_phd_info)) |>
-  rename(from = supervisor,
-         to = phd_name)
+  rename(from = supervisor, to = phd_name)
 
 save(results, file = "data/supervisors.Rdata")
 
@@ -156,7 +162,11 @@ extract_team_names <- function(url) {
   return(results)
 }
 
-download.file("https://www.monash.edu/business/ebs/our-people/staff-directory", destfile = "data/main.html", quiet = TRUE)
+download.file(
+  "https://www.monash.edu/business/ebs/our-people/staff-directory",
+  destfile = "data/main.html",
+  quiet = TRUE
+)
 
 main <- extract_team_names("data/main.html") |>
   unlist() |>
@@ -174,21 +184,26 @@ library(fuzzyjoin)
 load("data/supervisors.Rdata")
 load("data/main.Rdata")
 
-full <- results |> 
-  mutate(from = str_remove(from, "Prof |A/Prof |Dr |Prof. |Dr. |Assoc Prof. |Professor ")) |> 
-  stringdist_left_join(main,
-                       by = c("from" = "supervisor"),
-                       max_dist = 2) |> 
-  mutate(supervisor = ifelse(is.na(supervisor), from, supervisor)) |> 
-  mutate(supervisor = case_when(
-    supervisor == "David T. Frazier" ~ "David Frazier",
-    supervisor == "Di Cook" ~ "Dianne Cook",
-    supervisor == "Farshid Vahid-Araghi" ~ "Farshid Vahid",
-    supervisor == "Susan VanderPlas" ~ "Susan Vanderplus",
-    supervisor == "Thiyanga S. Talagala" ~ "Thiyanga Talagala",
-    .default = supervisor
-  )) |> 
-  select(to, supervisor) |> 
+full <- results |>
+  mutate(
+    from = str_remove(
+      from,
+      "Prof |A/Prof |Dr |Prof. |Dr. |Assoc Prof. |Professor "
+    )
+  ) |>
+  stringdist_left_join(main, by = c("from" = "supervisor"), max_dist = 2) |>
+  mutate(supervisor = ifelse(is.na(supervisor), from, supervisor)) |>
+  mutate(
+    supervisor = case_when(
+      supervisor == "David T. Frazier" ~ "David Frazier",
+      supervisor == "Di Cook" ~ "Dianne Cook",
+      supervisor == "Farshid Vahid-Araghi" ~ "Farshid Vahid",
+      supervisor == "Susan VanderPlas" ~ "Susan Vanderplus",
+      supervisor == "Thiyanga S. Talagala" ~ "Thiyanga Talagala",
+      .default = supervisor
+    )
+  ) |>
+  select(to, supervisor) |>
   rename(from = supervisor)
 ```
 
@@ -207,16 +222,23 @@ library(ggraph)
 ```
 
 ```{r}
-graph <- as_tbl_graph(full) |> 
-  activate(nodes) |> 
+graph <- as_tbl_graph(full) |>
+  activate(nodes) |>
   mutate(status = ifelse(name %in% full$to, "student", "supervisor"))
 
 ggraph(graph, layout = "stress") +
   geom_edge_link() +
   geom_node_point(aes(color = status)) +
-  geom_node_label(aes(label = name), size = 1.5, repel = TRUE, label.padding = 0.15) +
-  scale_color_manual(values = c("blue", "red"),
-                     labels = c("Student", "Supervisor")) +
+  geom_node_label(
+    aes(label = name),
+    size = 1.5,
+    repel = TRUE,
+    label.padding = 0.15
+  ) +
+  scale_color_manual(
+    values = c("blue", "red"),
+    labels = c("Student", "Supervisor")
+  ) +
   labs(color = "") +
   theme_void()
 ```
@@ -228,13 +250,14 @@ Good news. Remember, during the data process, I have talked about the data not b
 Let's explore some more details from this dataset. Who has supervised the most students?
 
 ```{r}
-full |> 
-  count(from) |> 
-  arrange(-n) |> 
-  head(10) |> 
+full |>
+  count(from) |>
+  arrange(-n) |>
+  head(10) |>
   rename(
     Supervisors = from,
-    `Total students` = n) |> 
+    `Total students` = n
+  ) |>
   kableExtra::kable()
 ```
 
@@ -314,7 +337,10 @@ scrape_phd_info <- function(url) {
         supervisors_text <- trimws(supervisors_text)
 
         # Split supervisors by comma, semicolon, or "and"
-        supervisors_list <- strsplit(supervisors_text, "\\s*[,;]\\s*|\\s+and\\s+")[[1]]
+        supervisors_list <- strsplit(
+          supervisors_text,
+          "\\s*[,;]\\s*|\\s+and\\s+"
+        )[[1]]
         supervisors_list <- trimws(supervisors_list)
 
         # Create one row per supervisor
@@ -339,7 +365,7 @@ scrape_phd_info <- function(url) {
             supervisor = NA,
             stringsAsFactors = FALSE
           )
-       )
+        )
       }
     }
   }
@@ -347,20 +373,23 @@ scrape_phd_info <- function(url) {
   return(phd_data)
 }
 
-url <- as.vector(glue::glue("https://www.monash.edu/business/research/our-researchers/graduate-research-students-and-supervisors?queries_degree_query=Econometrics+and+Business+Statistics&queries_degree_query_posted=1&result_1619149_result_page={a}", 
-                            a = c("1", "2", "3", "4")))
+url <- as.vector(glue::glue(
+  "https://www.monash.edu/business/research/our-researchers/graduate-research-students-and-supervisors?queries_degree_query=Econometrics+and+Business+Statistics&queries_degree_query_posted=1&result_1619149_result_page={a}",
+  a = c("1", "2", "3", "4")
+))
 
 for (i in seq_along(url)) {
-  download.file(url[i],
-                destfile = paste0("data/page", i, ".html"),
-                quiet = TRUE)
+  download.file(
+    url[i],
+    destfile = paste0("data/page", i, ".html"),
+    quiet = TRUE
+  )
 }
 
 file <- glue::glue("data/page{a}.html", a = c("1", "2", "3", "4"))
 
 results <- do.call(rbind, lapply(file, scrape_phd_info)) |>
-  rename(from = supervisor,
-         to = phd_name)
+  rename(from = supervisor, to = phd_name)
 
 save(results, file = "data/supervisors.Rdata")
 
@@ -409,7 +438,11 @@ extract_team_names <- function(url) {
   return(results)
 }
 
-download.file("https://www.monash.edu/business/ebs/our-people/staff-directory", destfile = "data/main.html", quiet = TRUE)
+download.file(
+  "https://www.monash.edu/business/ebs/our-people/staff-directory",
+  destfile = "data/main.html",
+  quiet = TRUE
+)
 
 main <- extract_team_names("data/main.html") |>
   unlist() |>
@@ -430,21 +463,26 @@ library(fuzzyjoin)
 load("data/supervisors.Rdata")
 load("data/main.Rdata")
 
-full <- results |> 
-  mutate(from = str_remove(from, "Prof |A/Prof |Dr |Prof. |Dr. |Assoc Prof. |Professor ")) |> 
-  stringdist_left_join(main,
-                       by = c("from" = "supervisor"),
-                       max_dist = 2) |> 
-  mutate(supervisor = ifelse(is.na(supervisor), from, supervisor)) |> 
-  mutate(supervisor = case_when(
-    supervisor == "David T. Frazier" ~ "David Frazier",
-    supervisor == "Di Cook" ~ "Dianne Cook",
-    supervisor == "Farshid Vahid-Araghi" ~ "Farshid Vahid",
-    supervisor == "Susan VanderPlas" ~ "Susan Vanderplus",
-    supervisor == "Thiyanga S. Talagala" ~ "Thiyanga Talagala",
-    .default = supervisor
-  )) |> 
-  select(to, supervisor) |> 
+full <- results |>
+  mutate(
+    from = str_remove(
+      from,
+      "Prof |A/Prof |Dr |Prof. |Dr. |Assoc Prof. |Professor "
+    )
+  ) |>
+  stringdist_left_join(main, by = c("from" = "supervisor"), max_dist = 2) |>
+  mutate(supervisor = ifelse(is.na(supervisor), from, supervisor)) |>
+  mutate(
+    supervisor = case_when(
+      supervisor == "David T. Frazier" ~ "David Frazier",
+      supervisor == "Di Cook" ~ "Dianne Cook",
+      supervisor == "Farshid Vahid-Araghi" ~ "Farshid Vahid",
+      supervisor == "Susan VanderPlas" ~ "Susan Vanderplus",
+      supervisor == "Thiyanga S. Talagala" ~ "Thiyanga Talagala",
+      .default = supervisor
+    )
+  ) |>
+  select(to, supervisor) |>
   rename(from = supervisor)
 ```
 

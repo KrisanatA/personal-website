@@ -16,12 +16,14 @@ website:
         text: Blog
       - href: cv.qmd
         text: CV
+  page-footer:
+    border: false
+    left: "© 2026 Krisanat Anukarnsakulchularp"
+    right: "Built with Quarto"
 
 format:
   html:
-    theme: Morph
+    theme: [cosmo, theme.scss]
     css: styles.css
     toc: true
-
-
 
